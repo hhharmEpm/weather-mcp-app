@@ -62,26 +62,11 @@ export async function startStreamableHTTPServer(
     next();
   });
 
-  app.use((err: Error, _req: Request, res: Response, _next: () => void) => {
-    logger.error({ err, message: err.message }, "Request error");
-
-    if (err instanceof AppError) {
-      res.status(err.statusCode).json({
-        jsonrpc: "2.0",
-        error: { code: err.code, message: err.message },
-        id: null,
-      });
-      return;
-    }
-
-    res.status(500).json({
-      jsonrpc: "2.0",
-      error: { code: "INTERNAL_ERROR", message: "Internal server error" },
-      id: null,
-    });
+  app.get("/health", (_req: Request, res: Response) => {
+    res.status(200).json({ status: "ok" });
   });
 
-  app.all("/mcp", async (req: Request, res: Response) => {
+  app.post("/mcp", async (req: Request, res: Response) => {
     const server = createServerFn();
     const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
@@ -105,6 +90,41 @@ export async function startStreamableHTTPServer(
         });
       }
     }
+  });
+
+  app.get("/mcp", (_req: Request, res: Response) => {
+    res.status(405).json({
+      jsonrpc: "2.0",
+      error: { code: -32000, message: "Method not allowed." },
+      id: null,
+    });
+  });
+
+  app.delete("/mcp", (_req: Request, res: Response) => {
+    res.status(405).json({
+      jsonrpc: "2.0",
+      error: { code: -32000, message: "Method not allowed." },
+      id: null,
+    });
+  });
+
+  app.use((err: Error, _req: Request, res: Response, _next: () => void) => {
+    logger.error({ err, message: err.message }, "Request error");
+
+    if (err instanceof AppError) {
+      res.status(err.statusCode).json({
+        jsonrpc: "2.0",
+        error: { code: err.code, message: err.message },
+        id: null,
+      });
+      return;
+    }
+
+    res.status(500).json({
+      jsonrpc: "2.0",
+      error: { code: "INTERNAL_ERROR", message: "Internal server error" },
+      id: null,
+    });
   });
 
   const httpServer = app.listen(port, (err) => {

@@ -6,27 +6,34 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * Semantic tokens below resolve to the host's MCP UI style variables
+   * (--color-background-primary, --color-text-primary, etc. — see
+   * MCP_UI_CSS_VAR_KEYS) when the host provides them via
+   * applyHostStyleVariables(). The literal values after the comma are only
+   * fallbacks for standalone/dev use when no host is present.
+   */
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: 210 40% 98%;
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --radius: 0.625rem;
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    --background: var(--color-background-primary, oklch(1 0 0));
+    --foreground: var(--color-text-primary, oklch(0.145 0 0));
+    --card: var(--color-background-secondary, oklch(1 0 0));
+    --card-foreground: var(--color-text-primary, oklch(0.145 0 0));
+    --primary: var(--color-background-inverse, oklch(0.205 0 0));
+    --primary-foreground: var(--color-text-inverse, oklch(0.985 0 0));
+    --secondary: var(--color-background-tertiary, oklch(0.97 0 0));
+    --secondary-foreground: var(--color-text-primary, oklch(0.205 0 0));
+    --muted: var(--color-background-tertiary, oklch(0.97 0 0));
+    --muted-foreground: var(--color-text-secondary, oklch(0.556 0 0));
+    --accent: var(--color-background-tertiary, oklch(0.97 0 0));
+    --accent-foreground: var(--color-text-primary, oklch(0.205 0 0));
+    --destructive: var(--color-text-danger, oklch(0.577 0.245 27.325));
+    --destructive-foreground: var(--color-text-inverse, oklch(0.985 0 0));
+    --border: var(--color-border-primary, oklch(0.922 0 0));
+    --input: var(--color-border-primary, oklch(0.922 0 0));
+    --ring: var(--color-ring-primary, oklch(0.708 0 0));
+    --radius: var(--border-radius-lg, 0.625rem);
+    --popover: var(--color-background-secondary, oklch(1 0 0));
+    --popover-foreground: var(--color-text-primary, oklch(0.145 0 0));
     --chart-1: oklch(0.809 0.105 251.813);
     --chart-2: oklch(0.623 0.214 259.815);
     --chart-3: oklch(0.546 0.245 262.881);
@@ -40,28 +47,30 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+    --font-sans: 'Geist Variable', sans-serif;
+    --font-mono: ui-monospace, monospace;
   }
 
   .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --destructive-foreground: 210 40% 98%;
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
+    --background: var(--color-background-primary, oklch(0.145 0 0));
+    --foreground: var(--color-text-primary, oklch(0.985 0 0));
+    --card: var(--color-background-secondary, oklch(0.205 0 0));
+    --card-foreground: var(--color-text-primary, oklch(0.985 0 0));
+    --primary: var(--color-background-inverse, oklch(0.922 0 0));
+    --primary-foreground: var(--color-text-inverse, oklch(0.205 0 0));
+    --secondary: var(--color-background-tertiary, oklch(0.269 0 0));
+    --secondary-foreground: var(--color-text-primary, oklch(0.985 0 0));
+    --muted: var(--color-background-tertiary, oklch(0.269 0 0));
+    --muted-foreground: var(--color-text-secondary, oklch(0.708 0 0));
+    --accent: var(--color-background-tertiary, oklch(0.269 0 0));
+    --accent-foreground: var(--color-text-primary, oklch(0.985 0 0));
+    --destructive: var(--color-text-danger, oklch(0.704 0.191 22.216));
+    --destructive-foreground: var(--color-text-inverse, oklch(0.985 0 0));
+    --border: var(--color-border-primary, oklch(1 0 0 / 10%));
+    --input: var(--color-border-primary, oklch(1 0 0 / 15%));
+    --ring: var(--color-ring-primary, oklch(0.556 0 0));
+    --popover: var(--color-background-secondary, oklch(0.205 0 0));
+    --popover-foreground: var(--color-text-primary, oklch(0.985 0 0));
     --chart-1: oklch(0.809 0.105 251.813);
     --chart-2: oklch(0.623 0.214 259.815);
     --chart-3: oklch(0.546 0.245 262.881);
@@ -76,26 +85,31 @@
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
   }
-  .theme {
-    --font-sans: 'Geist Variable', sans-serif;
-  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
-  html {
-    @apply font-sans;
-  }
-}
 
-@layer base {
+  /* Scrollbars themed from the same host-backed tokens as everything else. */
   * {
-    @apply border-border;
+    scrollbar-color: var(--border) transparent;
+    scrollbar-width: thin;
   }
-  body {
-    @apply bg-background text-foreground;
-    font-family: system-ui, -apple-system, sans-serif;
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: var(--radius);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
   }
 }
